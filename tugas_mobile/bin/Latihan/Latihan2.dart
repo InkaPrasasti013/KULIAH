@@ -10,8 +10,8 @@ void main() {
   double keliling = 2 * (panjang + lebar);
 
   // Tampilkan hasil dengan format rapi (bilangan bulat)
-  stdout.writeln("Panjang = ${panjang.toInt()}");
-  stdout.writeln("Lebar = ${lebar.toInt()}");
-  stdout.writeln("Luas = ${luas.toInt()}");
-  stdout.writeln("Keliling = ${keliling.toInt()}");
+  print("Panjang = ${panjang.toInt()}");
+  print("Lebar = ${lebar.toInt()}");
+  print("Luas = ${luas.toInt()}");
+  print("Keliling = ${keliling.toInt()}");
 }
