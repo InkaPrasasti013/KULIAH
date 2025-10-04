@@ -21,13 +21,14 @@ void main() {
     "Teh Manis Dingin": 6000,
   };
 
-  bool lanjut = true;
+  bool lanjut;
 
-  while (lanjut) {
+  // 🟢 DO...WHILE untuk mengulang pemesanan dari awal
+  do {
     List<String> pesanan = [];
     int totalHarga = 0;
 
-    print("===== SELAMAT DATANG DI RESTORAN INKA =====");
+    print("\n===== SELAMAT DATANG DI RESTORAN INKA =====");
 
     // === PILIH MAKANAN ===
     print("\n--- Menu Makanan ---");
@@ -37,20 +38,26 @@ void main() {
       i++;
     });
 
-    while (true) {
+    bool pilihMakanan = true;
+
+    // 🟠 WHILE untuk memilih makanan lebih dari satu
+    while (pilihMakanan) {
       stdout.write("Pilih makanan (nomor), atau ketik 0 jika selesai: ");
       String? input = stdin.readLineSync();
-      if (input == null || input == "0") break;
 
-      int? nomor = int.tryParse(input);
-      if (nomor != null && nomor > 0 && nomor <= menuMakanan.length) {
-        String namaMenu = menuMakanan.keys.elementAt(nomor - 1);
-        int hargaMenu = menuMakanan[namaMenu]!;
-        pesanan.add(namaMenu);
-        totalHarga += hargaMenu;
-        print("✅ $namaMenu ditambahkan (Rp$hargaMenu). Total sementara: Rp$totalHarga");
+      if (input == "0") {
+        pilihMakanan = false;
       } else {
-        print("⚠️ Pilihan tidak valid!");
+        int? nomor = int.tryParse(input ?? "");
+        if (nomor != null && nomor > 0 && nomor <= menuMakanan.length) {
+          String namaMenu = menuMakanan.keys.elementAt(nomor - 1);
+          int hargaMenu = menuMakanan[namaMenu]!;
+          pesanan.add(namaMenu);
+          totalHarga += hargaMenu;
+          print("✅ $namaMenu ditambahkan (Rp$hargaMenu). Total sementara: Rp$totalHarga");
+        } else {
+          print("⚠️ Pilihan tidak valid!");
+        }
       }
     }
 
@@ -62,20 +69,26 @@ void main() {
       j++;
     });
 
-    while (true) {
+    bool pilihMinuman = true;
+
+    // 🟠 WHILE juga dipakai untuk memilih minuman lebih dari satu
+    while (pilihMinuman) {
       stdout.write("Pilih minuman (nomor), atau ketik 0 jika selesai: ");
       String? input = stdin.readLineSync();
-      if (input == null || input == "0") break;
 
-      int? nomor = int.tryParse(input);
-      if (nomor != null && nomor > 0 && nomor <= menuMinuman.length) {
-        String namaMenu = menuMinuman.keys.elementAt(nomor - 1);
-        int hargaMenu = menuMinuman[namaMenu]!;
-        pesanan.add(namaMenu);
-        totalHarga += hargaMenu;
-        print("✅ $namaMenu ditambahkan (Rp$hargaMenu). Total sementara: Rp$totalHarga");
+      if (input == "0") {
+        pilihMinuman = false;
       } else {
-        print("⚠️ Pilihan tidak valid!");
+        int? nomor = int.tryParse(input ?? "");
+        if (nomor != null && nomor > 0 && nomor <= menuMinuman.length) {
+          String namaMenu = menuMinuman.keys.elementAt(nomor - 1);
+          int hargaMenu = menuMinuman[namaMenu]!;
+          pesanan.add(namaMenu);
+          totalHarga += hargaMenu;
+          print("✅ $namaMenu ditambahkan (Rp$hargaMenu). Total sementara: Rp$totalHarga");
+        } else {
+          print("⚠️ Pilihan tidak valid!");
+        }
       }
     }
 
@@ -90,28 +103,28 @@ void main() {
       }
       print("Total Harga Akhir: Rp$totalHarga");
 
-      // === PEMBAYARAN ===
-      while (true) {
+      // 🟢 DO...WHILE untuk memastikan pembayaran cukup
+      int bayar;
+      do {
         stdout.write("\nMasukkan jumlah uang pembayaran: Rp");
         String? bayarInput = stdin.readLineSync();
-        int? bayar = int.tryParse(bayarInput ?? "0");
+        bayar = int.tryParse(bayarInput ?? "0") ?? 0;
 
-        if (bayar != null && bayar >= totalHarga) {
-          int kembalian = bayar - totalHarga;
-          print("💰 Pembayaran berhasil! Kembalian Anda: Rp$kembalian");
-          break;
-        } else {
+        if (bayar < totalHarga) {
           print("❌ Uang tidak cukup, coba lagi!");
         }
-      }
+      } while (bayar < totalHarga);
+
+      int kembalian = bayar - totalHarga;
+      print("💰 Pembayaran berhasil! Kembalian Anda: Rp$kembalian");
     }
 
     // === KONFIRMASI PESAN LAGI ===
     stdout.write("\nApakah Anda ingin pesan lagi? (y/n): ");
     String? jawab = stdin.readLineSync();
-    if (jawab == null || jawab.toLowerCase() != "y") {
-      lanjut = false;
-      print("\n🍽️ Terima kasih telah berkunjung ke *Restoran Inka Delight*! Sampai jumpa!");
-    }
-  }
+    lanjut = (jawab != null && jawab.toLowerCase() == "y");
+
+  } while (lanjut); // 🔵 DO...WHILE berulang sampai pengguna menjawab "n"
+
+  print("\n🍽️ Terima kasih telah berkunjung ke *Restoran Inka Delight*! Sampai jumpa!");
 }
